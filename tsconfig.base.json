@@ -15,6 +15,21 @@
     "lib": [
       "es2018",
       "dom"
+    ],
+    "paths": {
+      "@app/lib/*": ["src/app/lib/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "jasmine",
+      "jquery"
     ]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

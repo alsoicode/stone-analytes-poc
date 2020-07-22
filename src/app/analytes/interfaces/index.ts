@@ -1,0 +1,1 @@
+export { IAnalyte } from './IAnalyte';

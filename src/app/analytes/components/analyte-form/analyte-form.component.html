@@ -1,0 +1,64 @@
+<div class="analytes-form" *ngIf="analytesForm && searchForm" [formGroup]="analytesForm">
+  <div class="table--fixed-header">
+    <table class="table table-striped table-hover table-bordered table--analytes" title="Scroll for more analytes">
+      <thead>
+        <tr>
+          <th>Common Analytes <button type="button" class="btn btn--link text-primary" (click)="toggleSearch()"><i class="material-icons">search</i></button></th>
+          <th>%</th>
+        </tr>
+        <tr *ngIf="showSearch" [formGroup]="searchForm">
+          <td colspan="3">
+            <div class="form-group mb-0">
+              <input id="search-analytes" type="text" class="form-control form-control-sm" formControlName="name" placeholder="Search">
+            </div>
+          </td>
+        </tr>
+      </thead>
+      <tbody formArrayName="analytes">
+        <tr *ngFor="let formGroup of analytesFormArray.controls; let i = index;" [ngClass]="{ 'd-none': !searchIndexFound(i) }" [formGroupName]="i" [attr.id]="'default-' + i">
+          <td>
+            {{ defaultAnalytes[i].name }}
+            <input type="hidden" formControlName="name">
+          </td>
+          <td>
+            <input type="text" class="form-control form-control--percent" [attr.tabindex]="i + 1" formControlName="percentage" [customErrors]="customErrors">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <table class="table table-striped table-hover table-bordered table--analytes">
+    <thead>
+      <tr>
+        <th colspan="3" class="py-1"><small>Custom Analytes</small></th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Total</th>
+        <th colspan="2">{{ sum | number:'1.0-3' }}%</th>
+      </tr>
+      <tr *ngIf="analytesForm.errors?.errors.rangeExceeded">
+        <td colspan="3" class="text-right text-danger no-borders">
+          Total must be between 99 and 101%
+        </td>
+      </tr>
+    </tfoot>
+    <tbody formArrayName="customAnalytes">
+      <tr *ngFor="let formGroup of customAnalytesFormArray.controls; let i = index;" [formGroupName]="i" [attr.id]="'custom-' + i">
+        <td>
+          <input type="text" class="form-control form-control--name" formControlName="name" (keydown.enter)="onCustomAnalyteEnter(formGroup)">
+        </td>
+        <td [attr.colspan]="formGroup.pristine ? 2 : 1">
+          <input type="text" class="form-control form-control--percent" formControlName="percentage" [customErrors]="customErrors" (keydown.enter)="onCustomAnalyteEnter(formGroup)">
+        </td>
+        <td *ngIf="!formGroup.pristine">
+          <button type="button" class="btn btn-sm" (click)="removeCustomAnalyte(i)">
+            <i class="material-icons">remove_circle_outline</i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="submit" class="btn btn-primary" [disabled]="!analytesForm.valid">Save</button>
+</div>

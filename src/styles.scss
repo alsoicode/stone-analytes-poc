@@ -1,1 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+.analytes-form {
+  width: 458px;
+}
+
+.table--fixed-header {
+  height: 554px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  table {
+    thead {
+      th {
+        background-color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+    }
+  }
+}
+
+.table--analytes {
+  th, td {
+    &:first-of-type {
+      width: 300px;
+    }
+  }
+
+  .no-borders {
+    border: solid 1px transparent;
+  }
+}
+
+.form-control {
+  &.form-control--percent {
+    width: 65px !important;
+  }
+}
+
+.form-group {
+  input {
+    &::placeholder {
+      color: #c4c4c4;
+    }
+  }
+}
+
+.btn {
+  &.btn--link {
+    border: 0 none;
+    line-height: 1;
+    padding: 0;
+  }
+}
